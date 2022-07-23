@@ -10,10 +10,12 @@
 1. [Credits](#credits)
 
 ## Description
+[⬆ Back to the conents](#contents)
 
 Backend (capstone?) project for a distributed E-Learning Management System (LMS) developed fully in Go-Lang.
 
 ## Objectives
+[⬆ Back to the conents](#contents)
 
 - Creating an easy to maintain backend project.
 - Using go-lang and learning it from scratch with this project.
@@ -21,6 +23,7 @@ Backend (capstone?) project for a distributed E-Learning Management System (LMS)
 - Creating a Postman collection for every user to use.
 
 ## Motivation
+[⬆ Back to the conents](#contents)
 
 I wanted to learn Go for so long, like, years even, but it was always I said I'd do later on, this is later on and I'm doing it. Part of the idea was, not only seeing Go on my feed, but this particular video, [Rust or Go for my next project? WHAT TO CHOOSE? (as a senior intern engineer)](https://www.youtube.com/watch?v=LbmvbXPj8Fs).
 
@@ -29,11 +32,13 @@ Go is a programming language developed and maintained by Google, a quite popular
 Another plus is that it's strongly typed. And, finally, obviously, it offers it's own testing packages.
 
 ## Tech Stack
+[⬆ Back to the conents](#contents)
 
 - **Golang**, as aforementioned, a popuplar compiled language developed by Google that allows concurrency and offers a type system.
 - **MySQL**, a relational database for SQL, and it's the one I'm the most comfortable with.
 
 ## Product
+[⬆ Back to the conents](#contents)
 
 _To be defined_
 
