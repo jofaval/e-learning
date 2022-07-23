@@ -1,4 +1,4 @@
-# E-Learning based on Go #
+# E-Learning Management System based on Go #
 
 ## Contents
 
