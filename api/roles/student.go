@@ -4,19 +4,21 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
+	"gorm.io/gorm"
 )
 
-type student struct {
-	ID        string `json:"id"`
-	Name      string `json:"name"`
-	Surname   string `json:"surname"`
-	Birthdate string `json:"birthdate"`
+type Student struct {
+	gorm.Model
+	Name      string
+	Surname   string
+	Birthdate string
 }
 
-var students = []student{
-	{ID: "1", Name: "Blue Train", Surname: "Coltrane", Birthdate: "2022/01/01"},
-	{ID: "2", Name: "Jeru", Surname: "Mulligan", Birthdate: "2022/01/01"},
-	{ID: "3", Name: "Sarah Vaughan and Clifford Brown", Surname: "Vaughan", Birthdate: "2022/01/01"},
+var students = []Student{
+	{Name: "Blue Train", Surname: "Coltrane", Birthdate: "2022/01/01"},
+	{Name: "Jeru", Surname: "Mulligan", Birthdate: "2022/01/01"},
+	{Name: "Sarah Vaughan and Clifford Brown", Surname: "Vaughan", Birthdate: "2022/01/01"},
 }
 
 func getStudents(context *gin.Context) {
