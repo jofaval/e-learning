@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
+	// "gorm.io/gorm"
 	// getStudents "e-learning/api/student"
 )
 
@@ -26,8 +26,8 @@ func getStudents(context *gin.Context) {
 }
 
 func main() {
-	dsn := "user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	// dsn := "user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
+	// db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	router := gin.Default()
 	router.GET("/students", getStudents)
 
