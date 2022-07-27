@@ -6,6 +6,7 @@
 1. [Objectives](#objectives)
 1. [Motivation](#motivation)
 1. [Tech Stack](#tech-stack)
+1. [Deployment](#deployment)
 1. [Product](#product)
 1. [Credits](#credits)
 
@@ -36,6 +37,12 @@ Another plus is that it's strongly typed. And, finally, obviously, it offers it'
 
 - **Golang**, as aforementioned, a popuplar compiled language developed by Google that allows concurrency and offers a type system.
 - **MySQL**, a relational database for SQL, and it's the one I'm the most comfortable with.
+
+## Deployment
+
+I'll be using Github Actions as my main source of CI/CD configuration, the idea is for it to be _ready_ to be deployed to a Cloud Computing Hyperscaler, not necessarily that it is going to be deployed, even though I'd like to test it on the cloud.
+
+I'll also be using Docker + Kubernetes for the container and orchetration. This part may suffer slight changes along the way.
 
 ## Product
 [⬆ Back to the conents](#contents)
