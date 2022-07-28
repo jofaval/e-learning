@@ -42,12 +42,18 @@ Another plus is that it's strongly typed. And, finally, obviously, it offers it'
 
 I'll be using Github Actions as my main source of CI/CD configuration, the idea is for it to be _ready_ to be deployed to a Cloud Computing Hyperscaler, not necessarily that it is going to be deployed, even though I'd like to test it on the cloud.
 
-I'll also be using Docker + Kubernetes for the container and orchetration. This part may suffer slight changes along the way.
+I'll also be using Docker + Kubernetes for the container and orchestration. This part may suffer slight changes along the way.
 
 ## Product
 [⬆ Back to the conents](#contents)
 
-_To be defined_
+I want to make an e-learning that's easy to maintain, easily scalable and _"blazingly fast"_.
+
+My product should allow for an administrator allowing different coordinators to create different courses composed of several modules imparted by one teacher to many students so that they (the students) can complete the proposed quizzes, activities and complete the required/optional activities that may be deemed necessary so that it's as successful as possible.
+
+With all the information generated via those actions, coming from (small) data science projects that I've been doing lately, dashboards may be composed so that reports and queries can help fullfill the goals the coordinators may have for their courses and teachers, coordinators and administrators can actually improve their content.
+
+Since it's going to be done on my free time with no other clear idea than playing around and learn this new technology (Golang), there's no defined Product Roadmap no ticket management, no management at all to be clear. It may be implemented later down the line.
 
 ## Credits
 [⬆ Back to the conents](#contents)
