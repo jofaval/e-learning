@@ -1,0 +1,3404 @@
+{
+	"info": {
+		"_postman_id": "1757fe54-004b-4dd4-a174-cfbb6d6ebf61",
+		"name": "[Go(lang)] E-Learning",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15503106"
+	},
+	"item": [
+		{
+			"name": "0.auth",
+			"item": [
+				{
+					"name": "[POST] /login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Get the current auth token\r",
+									"const env = pm.collectionVariables.get(\"env\");\r",
+									"const authKey = `${env}-auth`;\r",
+									"\r",
+									"// Parse the response token to the auth token\r",
+									"const response = pm.response.json();\r",
+									"if (response.data._token) {\r",
+									"    pm.collectionVariables.set(authKey, response.data._token);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "Starts a session in the system, necessary for any sort of operations, since it generates the auth token that you'll be using"
+					},
+					"response": []
+				},
+				{
+					"name": "[POST] /logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Get the current auth token\r",
+									"const env = pm.collectionVariables.get(\"env\");\r",
+									"const authKey = `${env}-auth`;\r",
+									"\r",
+									"// Parse the response token to the auth token\r",
+									"pm.collectionVariables.set(authKey, \"\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "Finishes a session, you may want to restart, or you won't be using that session any longer, in which case, it'd be a good practice to stop the session."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Analytics",
+			"item": [
+				{
+					"name": "Dashboard",
+					"item": [
+						{
+							"name": "[GET] /dashboards",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{route}}?page=1&perPage=10&indexStartsAt=0&noPagination=false&search&sort=ASC",
+									"host": [
+										"{{route}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "The page to request, if none given, it will be the first by default, if it exceeds the maximum, it will return the last page instead of an error"
+										},
+										{
+											"key": "perPage",
+											"value": "10",
+											"description": "The amount of results per page, 10 by default"
+										},
+										{
+											"key": "indexStartsAt",
+											"value": "0",
+											"description": "The starting page index, it will be 1 by default"
+										},
+										{
+											"key": "noPagination",
+											"value": "false",
+											"description": "Return ALL elements found, heavy load and risky, should require higher access levels, it will be false by default"
+										},
+										{
+											"key": "search",
+											"value": null,
+											"description": "The string to filter by"
+										},
+										{
+											"key": "sort",
+											"value": "ASC",
+											"description": "How will it be sorted, Ascendant by default.\nASC - Ascendant\nDESC - Descendant"
+										}
+									]
+								},
+								"description": "Gets all of the elements from the entity, allowing for pagination (strongly recomended)."
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /dashboards/pages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{route}}/pages",
+									"host": [
+										"{{route}}"
+									],
+									"path": [
+										"pages"
+									]
+								},
+								"description": "Gets all the amount of pages for the entity"
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /dashboards by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{route}}/1",
+									"host": [
+										"{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								},
+								"description": "Returns an element by it's ID.\n\n| **field** | **value** | **required** |\n| --- | --- | --- |\n| ***\\[HTTP\\]*** **ID** | The element's ID | **yes** |"
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /dashboards by slug",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{route}}/cool-dashboard",
+									"host": [
+										"{{route}}"
+									],
+									"path": [
+										"cool-dashboard"
+									]
+								},
+								"description": "Returns an element by it's slug.\n\n| **field** | **value** | **required** |\n| --- | --- | --- |\n| ***\\[HTTP\\]*** **slug** | The element's slug | **yes** |"
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /dashboards",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Best students performance from 2020-2021\",\r\n    \"description\": \"An analysis of the students' performance while the COVID-19 was was spreaded to evaluate the usefulness of the platform\",\r\n    \"slug\": \"2020-21-best-students\",\r\n    \"visualizations\": [\r\n        {\r\n            \"id\": 1,\r\n            \"title\": \"Special KPIs\",\r\n            \"description\": \"Metrics to analyze the performance\",\r\n            \"width\": 340,\r\n            \"height\": 640,\r\n            \"x\": 0,\r\n            \"y\": 0\r\n        },\r\n        {\r\n            \"id\": 2,\r\n            \"title\": \"Special KPIs\",\r\n            \"description\": \"Metrics to analyze the performance\",\r\n            \"width\": 340,\r\n            \"height\": 640,\r\n            \"x\": 0,\r\n            \"y\": 0\r\n        },\r\n        {\r\n            \"id\": 3,\r\n            \"title\": \"Special KPIs\",\r\n            \"description\": \"Metrics to analyze the performance\",\r\n            \"width\": 340,\r\n            \"height\": 640,\r\n            \"x\": 0,\r\n            \"y\": 0\r\n        },\r\n        {\r\n            \"id\": 4,\r\n            \"title\": \"Special KPIs\",\r\n            \"description\": \"Metrics to analyze the performance\",\r\n            \"width\": 340,\r\n            \"height\": 640,\r\n            \"x\": 0,\r\n            \"y\": 0\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{route}}",
+									"host": [
+										"{{route}}"
+									]
+								},
+								"description": "Creates a new element\n\n| **field** | **value** | **required** |\n| --- | --- | --- |\n| **name** | The name, or title, of the dashboard | **yes** |\n| **description** | The description of it's purpose of whatever the user may deem important | **no** |\n| **slug** | The verbose identification of the dashboard, must be unique | **no, will be generated by default** |\n| **visualizations** | An array of visualizations that the dashboard may use | **no** |"
+							},
+							"response": []
+						},
+						{
+							"name": "[PUT] /dashboards",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"My new dashboard name\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{route}}/1",
+									"host": [
+										"{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								},
+								"description": "Modifies an element.\n\n| **field** | **value** | **required** |\n| --- | --- | --- |\n| ***\\[HTTP\\]*** **ID** | The element's ID | **yes** |\n| **fieldToUpdate** | The new value | **At least one should be sent** |"
+							},
+							"response": []
+						},
+						{
+							"name": "[DELETE] /dashboards",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{route}}/1",
+									"host": [
+										"{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								},
+								"description": "Deletes an element.\n\n| **field** | **value** | **required** |\n| --- | --- | --- |\n| ***\\[HTTP\\]*** **ID** | The element's ID | **yes** |"
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /dashboards/batch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"create\": [\r\n        {\r\n            \r\n        }\r\n    ],\r\n    \"update\": [\r\n        {\r\n            \r\n        }\r\n    ],\r\n    \"delete\": [\r\n        1,\r\n        2,\r\n        3\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{route}}/batch",
+									"host": [
+										"{{route}}"
+									],
+									"path": [
+										"batch"
+									]
+								},
+								"description": "Creates, updates and/or deletes a bunch of elements in batch.\n\n| **field** | **value** | **required** |\n| --- | --- | --- |\n| **create** | All of the elements to create, without ID | **No** |\n| **update** | All of the elements to update, with ID | **No** |\n| **delete** | All of the elements to delete, just the ID | **No** |\n\nWhile none of them are required by default, at least one of them should be passed for the endpoint to compute, otherwise, an error may be thrown."
+							},
+							"response": []
+						}
+					],
+					"description": "A set of queries, reports and visualizations so that multiple data can be centralized into one source of information for the final user\n\n`/dashboards`",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"route\")}/dashboards`);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Query",
+					"item": [
+						{
+							"name": "[GET] /queries",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{route}}?page=1&perPage=10&indexStartsAt=0&noPagination=false",
+									"host": [
+										"{{route}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "The page to request, if none given, it will be the first by default, if it exceeds the maximum, it will return the last page instead of an error"
+										},
+										{
+											"key": "perPage",
+											"value": "10",
+											"description": "The amount of results per page, 10 by default"
+										},
+										{
+											"key": "indexStartsAt",
+											"value": "0",
+											"description": "The starting page index, it will be 1 by default"
+										},
+										{
+											"key": "noPagination",
+											"value": "false",
+											"description": "Return ALL elements found, heavy load and risky, should require higher access levels, it will be false by default"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /queries/pages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/pages",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"pages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /queries by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /queries",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[PUT] /queries",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[DELETE] /queries",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /queries/batch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"elements\": [\r\n        {\r\n            \r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}/batch",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"route\")}/queries`);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Report",
+					"item": [
+						{
+							"name": "[GET] /reports",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{route}}?page=1&perPage=10&indexStartsAt=0&noPagination=false",
+									"host": [
+										"{{route}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "The page to request, if none given, it will be the first by default, if it exceeds the maximum, it will return the last page instead of an error"
+										},
+										{
+											"key": "perPage",
+											"value": "10",
+											"description": "The amount of results per page, 10 by default"
+										},
+										{
+											"key": "indexStartsAt",
+											"value": "0",
+											"description": "The starting page index, it will be 1 by default"
+										},
+										{
+											"key": "noPagination",
+											"value": "false",
+											"description": "Return ALL elements found, heavy load and risky, should require higher access levels, it will be false by default"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /reports/pages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/pages",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"pages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /reports by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /reports by slug",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /reports",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[PUT] /reports",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[DELETE] /reports",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /reports/batch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"elements\": [\r\n        {\r\n            \r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}/batch",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"route\")}/reports`);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			],
+			"description": "All of the requests related to the analytics services endpoint. Mainly focused on providing data for queries and \"business\" reports.\n\n`/analytics`",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"base_url\")}/analytics`);"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Courses",
+			"item": [
+				{
+					"name": "dashboard",
+					"item": [
+						{
+							"name": "[GET] /dashboards",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{route}}?page=1&perPage=10&indexStartsAt=0&noPagination=false",
+									"host": [
+										"{{route}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "The page to request, if none given, it will be the first by default, if it exceeds the maximum, it will return the last page instead of an error"
+										},
+										{
+											"key": "perPage",
+											"value": "10",
+											"description": "The amount of results per page, 10 by default"
+										},
+										{
+											"key": "indexStartsAt",
+											"value": "0",
+											"description": "The starting page index, it will be 1 by default"
+										},
+										{
+											"key": "noPagination",
+											"value": "false",
+											"description": "Return ALL elements found, heavy load and risky, should require higher access levels, it will be false by default"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /dashboards/pages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/pages",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"pages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /dashboards by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /dashboards by slug",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /dashboards",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[PUT] /dashboards",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[DELETE] /dashboards",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /dashboards/batch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"elements\": [\r\n        {\r\n            \r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}/batch",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"route\")}/dashboards`);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "query",
+					"item": [
+						{
+							"name": "[GET] /queries",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{route}}?page=1&perPage=10&indexStartsAt=0&noPagination=false",
+									"host": [
+										"{{route}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "The page to request, if none given, it will be the first by default, if it exceeds the maximum, it will return the last page instead of an error"
+										},
+										{
+											"key": "perPage",
+											"value": "10",
+											"description": "The amount of results per page, 10 by default"
+										},
+										{
+											"key": "indexStartsAt",
+											"value": "0",
+											"description": "The starting page index, it will be 1 by default"
+										},
+										{
+											"key": "noPagination",
+											"value": "false",
+											"description": "Return ALL elements found, heavy load and risky, should require higher access levels, it will be false by default"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /queries/pages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/pages",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"pages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /queries by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /queries",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[PUT] /queries",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[DELETE] /queries",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /queries/batch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"elements\": [\r\n        {\r\n            \r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}/batch",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"route\")}/queries`);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "report",
+					"item": [
+						{
+							"name": "[GET] /reports",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{route}}?page=1&perPage=10&indexStartsAt=0&noPagination=false",
+									"host": [
+										"{{route}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "The page to request, if none given, it will be the first by default, if it exceeds the maximum, it will return the last page instead of an error"
+										},
+										{
+											"key": "perPage",
+											"value": "10",
+											"description": "The amount of results per page, 10 by default"
+										},
+										{
+											"key": "indexStartsAt",
+											"value": "0",
+											"description": "The starting page index, it will be 1 by default"
+										},
+										{
+											"key": "noPagination",
+											"value": "false",
+											"description": "Return ALL elements found, heavy load and risky, should require higher access levels, it will be false by default"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /reports/pages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/pages",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"pages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /reports by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /reports by slug",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /reports",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[PUT] /reports",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[DELETE] /reports",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /reports/batch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"elements\": [\r\n        {\r\n            \r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}/batch",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"route\")}/reports`);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"base_url\")}/analytics`);"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Quizzes",
+			"item": [
+				{
+					"name": "dashboard",
+					"item": [
+						{
+							"name": "[GET] /dashboards",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{route}}?page=1&perPage=10&indexStartsAt=0&noPagination=false",
+									"host": [
+										"{{route}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "The page to request, if none given, it will be the first by default, if it exceeds the maximum, it will return the last page instead of an error"
+										},
+										{
+											"key": "perPage",
+											"value": "10",
+											"description": "The amount of results per page, 10 by default"
+										},
+										{
+											"key": "indexStartsAt",
+											"value": "0",
+											"description": "The starting page index, it will be 1 by default"
+										},
+										{
+											"key": "noPagination",
+											"value": "false",
+											"description": "Return ALL elements found, heavy load and risky, should require higher access levels, it will be false by default"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /dashboards/pages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/pages",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"pages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /dashboards by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /dashboards by slug",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /dashboards",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[PUT] /dashboards",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[DELETE] /dashboards",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /dashboards/batch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"elements\": [\r\n        {\r\n            \r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}/batch",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"route\")}/dashboards`);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "query",
+					"item": [
+						{
+							"name": "[GET] /queries",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{route}}?page=1&perPage=10&indexStartsAt=0&noPagination=false",
+									"host": [
+										"{{route}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "The page to request, if none given, it will be the first by default, if it exceeds the maximum, it will return the last page instead of an error"
+										},
+										{
+											"key": "perPage",
+											"value": "10",
+											"description": "The amount of results per page, 10 by default"
+										},
+										{
+											"key": "indexStartsAt",
+											"value": "0",
+											"description": "The starting page index, it will be 1 by default"
+										},
+										{
+											"key": "noPagination",
+											"value": "false",
+											"description": "Return ALL elements found, heavy load and risky, should require higher access levels, it will be false by default"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /queries/pages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/pages",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"pages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /queries by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /queries",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[PUT] /queries",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[DELETE] /queries",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /queries/batch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"elements\": [\r\n        {\r\n            \r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}/batch",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"route\")}/queries`);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "report",
+					"item": [
+						{
+							"name": "[GET] /reports",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{route}}?page=1&perPage=10&indexStartsAt=0&noPagination=false",
+									"host": [
+										"{{route}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "The page to request, if none given, it will be the first by default, if it exceeds the maximum, it will return the last page instead of an error"
+										},
+										{
+											"key": "perPage",
+											"value": "10",
+											"description": "The amount of results per page, 10 by default"
+										},
+										{
+											"key": "indexStartsAt",
+											"value": "0",
+											"description": "The starting page index, it will be 1 by default"
+										},
+										{
+											"key": "noPagination",
+											"value": "false",
+											"description": "Return ALL elements found, heavy load and risky, should require higher access levels, it will be false by default"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /reports/pages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/pages",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"pages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /reports by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /reports by slug",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /reports",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[PUT] /reports",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[DELETE] /reports",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /reports/batch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"elements\": [\r\n        {\r\n            \r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}/batch",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"route\")}/reports`);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"base_url\")}/analytics`);"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Roles",
+			"item": [
+				{
+					"name": "dashboard",
+					"item": [
+						{
+							"name": "[GET] /dashboards",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{route}}?page=1&perPage=10&indexStartsAt=0&noPagination=false",
+									"host": [
+										"{{route}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "The page to request, if none given, it will be the first by default, if it exceeds the maximum, it will return the last page instead of an error"
+										},
+										{
+											"key": "perPage",
+											"value": "10",
+											"description": "The amount of results per page, 10 by default"
+										},
+										{
+											"key": "indexStartsAt",
+											"value": "0",
+											"description": "The starting page index, it will be 1 by default"
+										},
+										{
+											"key": "noPagination",
+											"value": "false",
+											"description": "Return ALL elements found, heavy load and risky, should require higher access levels, it will be false by default"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /dashboards/pages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/pages",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"pages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /dashboards by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /dashboards by slug",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /dashboards",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[PUT] /dashboards",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[DELETE] /dashboards",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /dashboards/batch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"elements\": [\r\n        {\r\n            \r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}/batch",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"route\")}/dashboards`);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "query",
+					"item": [
+						{
+							"name": "[GET] /queries",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{route}}?page=1&perPage=10&indexStartsAt=0&noPagination=false",
+									"host": [
+										"{{route}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "The page to request, if none given, it will be the first by default, if it exceeds the maximum, it will return the last page instead of an error"
+										},
+										{
+											"key": "perPage",
+											"value": "10",
+											"description": "The amount of results per page, 10 by default"
+										},
+										{
+											"key": "indexStartsAt",
+											"value": "0",
+											"description": "The starting page index, it will be 1 by default"
+										},
+										{
+											"key": "noPagination",
+											"value": "false",
+											"description": "Return ALL elements found, heavy load and risky, should require higher access levels, it will be false by default"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /queries/pages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/pages",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"pages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /queries by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /queries",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[PUT] /queries",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[DELETE] /queries",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /queries/batch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"elements\": [\r\n        {\r\n            \r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}/batch",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"route\")}/queries`);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "report",
+					"item": [
+						{
+							"name": "[GET] /reports",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{route}}?page=1&perPage=10&indexStartsAt=0&noPagination=false",
+									"host": [
+										"{{route}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "The page to request, if none given, it will be the first by default, if it exceeds the maximum, it will return the last page instead of an error"
+										},
+										{
+											"key": "perPage",
+											"value": "10",
+											"description": "The amount of results per page, 10 by default"
+										},
+										{
+											"key": "indexStartsAt",
+											"value": "0",
+											"description": "The starting page index, it will be 1 by default"
+										},
+										{
+											"key": "noPagination",
+											"value": "false",
+											"description": "Return ALL elements found, heavy load and risky, should require higher access levels, it will be false by default"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /reports/pages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/pages",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"pages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /reports by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /reports by slug",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /reports",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[PUT] /reports",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[DELETE] /reports",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /reports/batch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"elements\": [\r\n        {\r\n            \r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}/batch",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"route\")}/reports`);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"base_url\")}/analytics`);"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Settings",
+			"item": [
+				{
+					"name": "dashboard",
+					"item": [
+						{
+							"name": "[GET] /dashboards",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{route}}?page=1&perPage=10&indexStartsAt=0&noPagination=false",
+									"host": [
+										"{{route}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "The page to request, if none given, it will be the first by default, if it exceeds the maximum, it will return the last page instead of an error"
+										},
+										{
+											"key": "perPage",
+											"value": "10",
+											"description": "The amount of results per page, 10 by default"
+										},
+										{
+											"key": "indexStartsAt",
+											"value": "0",
+											"description": "The starting page index, it will be 1 by default"
+										},
+										{
+											"key": "noPagination",
+											"value": "false",
+											"description": "Return ALL elements found, heavy load and risky, should require higher access levels, it will be false by default"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /dashboards/pages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/pages",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"pages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /dashboards by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /dashboards by slug",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /dashboards",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[PUT] /dashboards",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[DELETE] /dashboards",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /dashboards/batch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"elements\": [\r\n        {\r\n            \r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}/batch",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"route\")}/dashboards`);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "query",
+					"item": [
+						{
+							"name": "[GET] /queries",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{route}}?page=1&perPage=10&indexStartsAt=0&noPagination=false",
+									"host": [
+										"{{route}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "The page to request, if none given, it will be the first by default, if it exceeds the maximum, it will return the last page instead of an error"
+										},
+										{
+											"key": "perPage",
+											"value": "10",
+											"description": "The amount of results per page, 10 by default"
+										},
+										{
+											"key": "indexStartsAt",
+											"value": "0",
+											"description": "The starting page index, it will be 1 by default"
+										},
+										{
+											"key": "noPagination",
+											"value": "false",
+											"description": "Return ALL elements found, heavy load and risky, should require higher access levels, it will be false by default"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /queries/pages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/pages",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"pages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /queries by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /queries",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[PUT] /queries",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[DELETE] /queries",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /queries/batch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"elements\": [\r\n        {\r\n            \r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}/batch",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"route\")}/queries`);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "report",
+					"item": [
+						{
+							"name": "[GET] /reports",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{route}}?page=1&perPage=10&indexStartsAt=0&noPagination=false",
+									"host": [
+										"{{route}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "The page to request, if none given, it will be the first by default, if it exceeds the maximum, it will return the last page instead of an error"
+										},
+										{
+											"key": "perPage",
+											"value": "10",
+											"description": "The amount of results per page, 10 by default"
+										},
+										{
+											"key": "indexStartsAt",
+											"value": "0",
+											"description": "The starting page index, it will be 1 by default"
+										},
+										{
+											"key": "noPagination",
+											"value": "false",
+											"description": "Return ALL elements found, heavy load and risky, should require higher access levels, it will be false by default"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /reports/pages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/pages",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"pages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /reports by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[GET] /reports by slug",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{route}}/1",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /reports",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[PUT] /reports",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[DELETE] /reports",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}",
+									"host": [
+										"{{base_url}}{{route}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[POST] /reports/batch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"elements\": [\r\n        {\r\n            \r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{route}}/batch",
+									"host": [
+										"{{base_url}}{{route}}"
+									],
+									"path": [
+										"batch"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"route\")}/reports`);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"route\", `${pm.collectionVariables.get(\"base_url\")}/analytics`);"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Variable testing",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}",
+					"host": [
+						"{{base_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Health check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}",
+					"host": [
+						"{{base_url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{auth}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Response time is less than 200ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(200);",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "env",
+			"value": "dev",
+			"type": "string"
+		},
+		{
+			"key": "dev-protocol",
+			"value": "http",
+			"type": "string"
+		},
+		{
+			"key": "prod-protocol",
+			"value": "https",
+			"type": "string"
+		},
+		{
+			"key": "protocol",
+			"value": "http",
+			"type": "string"
+		},
+		{
+			"key": "dev-domain",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"key": "prod-domain",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"key": "domain",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"key": "dev-port",
+			"value": "8080",
+			"type": "string"
+		},
+		{
+			"key": "prod-port",
+			"value": "80",
+			"type": "string"
+		},
+		{
+			"key": "port",
+			"value": "8080",
+			"type": "string"
+		},
+		{
+			"key": "dev-auth",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "prod-auth",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "auth",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "dev-base_path",
+			"value": "/",
+			"type": "string"
+		},
+		{
+			"key": "prod-base_path",
+			"value": "/api",
+			"type": "string"
+		},
+		{
+			"key": "base_path",
+			"value": "/",
+			"type": "string"
+		},
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "dashboard-route",
+			"value": "/analytics/dashboards"
+		},
+		{
+			"key": "route",
+			"value": "/route",
+			"type": "string"
+		}
+	]
+}
