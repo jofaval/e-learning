@@ -11,12 +11,12 @@
 1. [Credits](#credits)
 
 ## Description
-[⬆ Back to the conents](#contents)
+[⬆ Back to the contents](#contents)
 
 Backend (capstone?) project for a distributed E-Learning Management System (LMS) developed fully in Go-Lang.
 
 ## Objectives
-[⬆ Back to the conents](#contents)
+[⬆ Back to the contents](#contents)
 
 - Creating an easy to maintain backend project.
 - Using go-lang and learning it from scratch with this project.
@@ -24,7 +24,7 @@ Backend (capstone?) project for a distributed E-Learning Management System (LMS)
 - Creating a Postman collection for every user to use.
 
 ## Motivation
-[⬆ Back to the conents](#contents)
+[⬆ Back to the contents](#contents)
 
 I wanted to learn Go for so long, like, years even, but it was always I said I'd do later on, this is later on and I'm doing it. Part of the idea was, not only seeing Go on my feed, but this particular video, [Rust or Go for my next project? WHAT TO CHOOSE? (as a senior intern engineer)](https://www.youtube.com/watch?v=LbmvbXPj8Fs).
 
@@ -33,19 +33,20 @@ Go is a programming language developed and maintained by Google, a quite popular
 Another plus is that it's strongly typed. And, finally, obviously, it offers it's own testing packages.
 
 ## Tech Stack
-[⬆ Back to the conents](#contents)
+[⬆ Back to the contents](#contents)
 
 - **Golang**, as aforementioned, a popuplar compiled language developed by Google that allows concurrency and offers a type system.
 - **MySQL**, a relational database for SQL, and it's the one I'm the most comfortable with.
 
 ## Deployment
+[⬆ Back to the contents](#contents)
 
 I'll be using Github Actions as my main source of CI/CD configuration, the idea is for it to be _ready_ to be deployed to a Cloud Computing Hyperscaler, not necessarily that it is going to be deployed, even though I'd like to test it on the cloud.
 
 I'll also be using Docker + Kubernetes for the container and orchestration. This part may suffer slight changes along the way.
 
 ## Product
-[⬆ Back to the conents](#contents)
+[⬆ Back to the contents](#contents)
 
 I want to make an e-learning that's easy to maintain, easily scalable and _"blazingly fast"_.
 
@@ -56,7 +57,7 @@ With all the information generated via those actions, coming from (small) data s
 Since it's going to be done on my free time with no other clear idea than playing around and learn this new technology (Golang), there's no defined Product Roadmap no ticket management, no management at all to be clear. It may be implemented later down the line.
 
 ## Credits
-[⬆ Back to the conents](#contents)
+[⬆ Back to the contents](#contents)
 
 Using Go-Lang motivated by this YouTube video: [Rust or Go for my next project? WHAT TO CHOOSE? (as a senior intern engineer)](https://www.youtube.com/watch?v=LbmvbXPj8Fs).
 
