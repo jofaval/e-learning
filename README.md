@@ -37,6 +37,8 @@ Another plus is that it's strongly typed. And, finally, obviously, it offers it'
 
 - **Golang**, as aforementioned, a popuplar compiled language developed by Google that allows concurrency and offers a type system.
 - **MySQL**, a relational database for SQL, and it's the one I'm the most comfortable with.
+- **Postman**, it will be the main source of API documentation, even though I might get some references at paste them in a Markdown Document.
+  - [[Go(lang)] E-Learning.postman_collection.json](./%5BGo(lang)%5D%20E-Learning.postman_collection.json)
 
 ## Deployment
 [⬆ Back to the contents](#contents)

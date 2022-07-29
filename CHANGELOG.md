@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 
 - Created a CHANGELOG.
+- Added Postman reference in the README.
 
 ## 2022-07-29
 
