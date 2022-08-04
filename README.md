@@ -8,6 +8,7 @@
 1. [Tech Stack](#tech-stack)
 1. [Deployment](#deployment)
 1. [Product](#product)
+1. [Architecture](#architecture)
 1. [Credits](#credits)
 
 ## Description
@@ -57,6 +58,16 @@ My product should allow for an administrator allowing different coordinators to 
 With all the information generated via those actions, coming from (small) data science projects that I've been doing lately, dashboards may be composed so that reports and queries can help fullfill the goals the coordinators may have for their courses and teachers, coordinators and administrators can actually improve their content.
 
 Since it's going to be done on my free time with no other clear idea than playing around and learn this new technology (Golang), there's no defined Product Roadmap no ticket management, no management at all to be clear. It may be implemented later down the line.
+
+## Architecture
+[⬆ Back to the contents](#contents)
+
+This section will be full of diagrams and in-depth detail about the database, entites, design patterns, and choices made along the way, if any was made, which I'm hoping to.
+
+### Entities
+
+![Base entities diagram](./entity-diagram.png)
+_An starting point at the moment being._
 
 ## Credits
 [⬆ Back to the contents](#contents)
