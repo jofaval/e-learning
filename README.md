@@ -64,9 +64,11 @@ Since it's going to be done on my free time with no other clear idea than playin
 
 This section will be full of diagrams and in-depth detail about the database, entites, design patterns, and choices made along the way, if any was made, which I'm hoping to.
 
+The architecture documentation can be found at: [/docs/architecture/README.md](./docs/architecture/README.md).
+
 ### Entities
 
-![Base entities diagram](./entity-diagram.png)
+![Base entities diagram](./docs/architecture/entities/entity-diagram.png)
 _An starting point at the moment being._
 
 ## Credits
