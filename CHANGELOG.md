@@ -4,6 +4,18 @@ All the log of changes on the project/repository
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 2022-08-04
+
+### Added
+
+- Created an starting base entities diagram to define a base idea, using Dia. And it is not complete
+
+## 2022-08-02
+
+### Added
+
+- Created a base "prototype" with draw.io of what the EER could be, I don't know if it'll be continued on that platform
+
 ## 2022-07-30
 
 ### Added
