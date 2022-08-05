@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 
 - Added the base API docs (not final and not totally correct).
+- Added a new base for the EER in Dia. Just a starting point, still a long way to go.
 
 ## 2022-08-04
 

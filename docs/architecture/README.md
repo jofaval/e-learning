@@ -5,3 +5,4 @@ This section will be full of diagrams and in-depth detail about the database, en
 ## Sections
 
 1. [Entities](./entities/)
+1. [Extended Entity-Relationship](./eer/)
