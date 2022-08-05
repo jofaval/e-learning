@@ -4,6 +4,12 @@ All the log of changes on the project/repository
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 2022-08-05
+
+### Added
+
+- Added the base API docs (not final and not totally correct).
+
 ## 2022-08-04
 
 ### Added
