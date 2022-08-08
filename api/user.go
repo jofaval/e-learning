@@ -23,7 +23,7 @@ type User struct {
 	// A more advanced settings should be made as too choose which group to show it to,
 	// and block certain users from seeing it, or rather,
 	// even allowing only a selected group of users that can visualize it
-	PublicPronouns bool
+	arePronounsPublic bool
 	// A brief description the user chooses for themself
 	Bio string
 	// Should take into account multiple inscriptions,
