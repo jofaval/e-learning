@@ -32,5 +32,5 @@ type User struct {
 	// The user that authorized this specific user, or enrolled them
 	AuthorizedBy *uint
 	// All of the users that this specific user authorized
-	Authorized []User
+	Authorized []User `gorm:"foreignkey:UserID"`
 }
