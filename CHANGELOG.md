@@ -4,6 +4,12 @@ All the log of changes on the project/repository
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 2022-08-12
+
+### Added
+
+- Base roles entities models (Teacher, Coordinator and Administrator)
+
 ## 2022-08-09
 
 ### Added
